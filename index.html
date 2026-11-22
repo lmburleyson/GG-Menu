@@ -196,7 +196,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .h-pills span { height: 32px; line-height: 30px; padding: 0 13px; border-radius: 16px; border: 1px solid rgba(150, 130, 235, .62); background: rgba(20, 16, 50, .6); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #d9d4f5; }
 .poster .h-row { position: absolute; left: 18px; top: 381px; width: 1884px; height: 615px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
 .poster .h-card { position: relative; border-radius: 16px; border: 2px solid rgba(98, 88, 180, .55); background: rgba(18, 15, 40, .88); padding: 6px 6px 0; overflow: hidden; }
-.poster .h-ph { height: 530px; border-radius: 10px; background-size: cover; background-position: center; background-color: #14102c; }
+.poster .h-ph { height: 530px; border-radius: 10px; background-size: cover; background-position: center bottom; background-repeat: no-repeat; background-color: #14102c; }
 .poster .h-nm { margin: 0; padding: 0 6px; font-weight: 800; font-size: 36px; line-height: 40px; letter-spacing: -.045em; margin-top: 10px; }
 .poster .h-ds { padding: 0 6px; font-size: 16px; line-height: 20px; color: #b9b6d6; margin-top: 4px; }
 .poster .h-card.out .h-ph { opacity: .3; }
@@ -205,7 +205,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 
 /* card grid (pre-rolls, gold label) */
 .poster .c-grid { position: absolute; left: 18px; top: 193px; width: 1884px; height: 673px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; }
-.poster .c-card { position: relative; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .1); background-color: #17162a; background-size: cover; background-position: center; overflow: hidden; }
+.poster .c-card { position: relative; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .1); background-color: #17162a; background-size: cover; background-position: center bottom; background-repeat: no-repeat; overflow: hidden; }
 .poster .c-txt { position: absolute; left: 10px; bottom: 8px; }
 .poster .c-txt b { display: block; font-weight: 800; font-size: 24px; line-height: 28px; letter-spacing: -.03em; }
 .poster .c-txt span { display: block; font-size: 14px; line-height: 18px; color: #d8d5ec; }
@@ -215,6 +215,8 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .c-card.out .c-txt { z-index: 2; }
 .poster .c-card.out .c-txt b { color: rgba(255, 255, 255, .5); }
 
+.poster .c-card::before, .poster .f-img::before, .poster .r-c::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 46%; background: linear-gradient(180deg, rgba(8, 8, 22, 0), rgba(8, 8, 22, .72)); z-index: 1; }
+.poster .c-card .c-txt, .poster .f-img .c-txt, .poster .r-c .c-txt { z-index: 3; }
 /* ladder tiles (store posters) */
 .poster .l-row { position: absolute; display: grid; gap: 8px; }
 .poster .l-t { position: relative; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .12); background: rgba(12, 11, 32, .9); padding: 13px 14px 0; min-width: 0; }
@@ -260,7 +262,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .f-ban b { font-weight: 800; font-size: 30px; letter-spacing: -.04em; flex: 1; }
 .poster .f-ban .nt { font-size: 13px; color: #d6d2ec; }
 .poster .f-ban .pr { font-weight: 800; font-size: 40px; color: #f3c64d; letter-spacing: -.04em; }
-.poster .f-img { position: absolute; left: 14px; width: 700px; height: 218px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .1); background-size: cover; background-position: center; background-color: #17162a; overflow: hidden; }
+.poster .f-img { position: absolute; left: 14px; width: 700px; height: 218px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .1); background-size: cover; background-position: center bottom; background-repeat: no-repeat; background-color: #17162a; overflow: hidden; }
 .poster .f-img.out::after { content: ""; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: rgba(8, 8, 24, .66); }
 .poster .f-img .c-txt { z-index: 2; left: 10px; bottom: 8px; }
 .poster .f-img .c-txt b { font-size: 22px; line-height: 26px; }
@@ -268,7 +270,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .f-img.out .c-txt b { color: rgba(255, 255, 255, .5); }
 .poster .r-hash { position: absolute; left: 14px; top: 56px; width: 1110px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 6px; row-gap: 0; }
 .poster .r-h { height: 371px; }
-.poster .r-h .rp { height: 328px; border-radius: 12px; background-size: cover; background-position: center; background-color: #14102c; }
+.poster .r-h .rp { height: 328px; border-radius: 12px; background-size: cover; background-position: center bottom; background-repeat: no-repeat; background-color: #14102c; }
 .poster .r-h .rc { text-align: center; padding-top: 8px; }
 .poster .r-h .rc b { display: block; font-weight: 800; font-size: 17px; line-height: 20px; letter-spacing: -.02em; }
 .poster .r-h .rc span { display: block; font-size: 12px; line-height: 15px; color: #b9b6d4; }
@@ -276,7 +278,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .r-h.out .rc b { color: rgba(255, 255, 255, .42); }
 .poster .r-h .rc .pl { margin-top: 4px; }
 .poster .r-pre { position: absolute; left: 14px; top: 56px; width: 700px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.poster .r-c { position: relative; height: 174px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, .1); background-size: cover; background-position: center; background-color: #17162a; overflow: hidden; }
+.poster .r-c { position: relative; height: 174px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, .1); background-size: cover; background-position: center bottom; background-repeat: no-repeat; background-color: #17162a; overflow: hidden; }
 .poster .r-c .c-txt { left: 10px; bottom: 7px; }
 .poster .r-c .c-txt b { font-size: 21px; line-height: 24px; }
 .poster .r-c .c-txt span { font-size: 12px; line-height: 15px; }
@@ -718,16 +720,18 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
       var css = document.getElementById("appCss").textContent.replace(/&/g, "&amp;").replace(/</g, "&lt;");
       var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><foreignObject x="0" y="0" width="1920" height="1080">' +
         '<div xmlns="http://www.w3.org/1999/xhtml"><style>' + css + "</style>" + xhtml + "</div></foreignObject></svg>";
-      var img = new Image();
-      img.onload = function () {
-        setTimeout(function () {
-          try {
-            var c = document.createElement("canvas"); c.width = 1920; c.height = 1080;
-            var ctx = c.getContext("2d"); ctx.fillStyle = "#07071a"; ctx.fillRect(0, 0, 1920, 1080); ctx.drawImage(img, 0, 0, 1920, 1080);
-            c.toBlob(function (b) { b ? resolve(b) : reject(new Error("empty")); }, "image/png");
-          } catch (e) { reject(e); }
-        }, 200);
-      };
+      var img = new Image(), tries = 0, last = null;
+      function sig(ctx) { var d = ctx.getImageData(0, 0, 1920, 1080).data, s = 0; for (var i = 0; i < d.length; i += 997) s = (s * 31 + d[i]) | 0; return s; }
+      function pass() {
+        try {
+          var c = document.createElement("canvas"); c.width = 1920; c.height = 1080;
+          var ctx = c.getContext("2d"); ctx.fillStyle = "#07071a"; ctx.fillRect(0, 0, 1920, 1080); ctx.drawImage(img, 0, 0, 1920, 1080);
+          var s = sig(ctx); tries += 1;
+          if ((s === last && tries >= 3) || tries >= 12) { c.toBlob(function (b) { b ? resolve(b) : reject(new Error("empty")); }, "image/png"); return; }
+          last = s; setTimeout(pass, 350);
+        } catch (e) { reject(e); }
+      }
+      img.onload = function () { setTimeout(pass, 300); };
       img.onerror = function () { reject(new Error("load")); };
       img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     });
