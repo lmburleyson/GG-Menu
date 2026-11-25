@@ -156,6 +156,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .g2 .c.out .nm { color: rgba(255, 255, 255, .34); text-align: center; }
 .poster .div { height: 1px; background: rgba(255, 255, 255, .14); margin: 12px 0; flex: none; }
 .poster .ph3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; flex: 1; margin-top: 6px; min-height: 0; padding-bottom: 8px; }
+.poster .hl { margin-bottom: 8px; }
 .poster .ph2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; flex: 1; margin-top: 0; min-height: 0; }
 .poster .pc { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
 .poster .pc .ph { flex: 1; min-height: 0; border-radius: 8px; background-size: cover; background-position: center; background-repeat: no-repeat; }
@@ -236,6 +237,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .l-t.md .n { font-size: 11px; line-height: 13px; }
 .poster .b-gold { --bc: #f3c64d; --bg1: rgba(120, 88, 30, .5); }
 .poster .b-green { --bc: #84e08f; --bg1: rgba(40, 110, 70, .5); }
+.poster .b-purple { --bc: #a99bff; --bg1: rgba(90, 70, 170, .5); }
 .poster .b-teal { --bc: #4fe0c4; --bg1: rgba(24, 110, 100, .55); }
 
 /* two-panel posters (flower, rolls) */
@@ -270,6 +272,9 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
 .poster .f-img.out .c-txt b { color: rgba(255, 255, 255, .5); }
 .poster .r-hash { position: absolute; left: 14px; top: 56px; width: 1110px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 6px; row-gap: 0; }
 .poster .r-h { height: 371px; }
+.poster .r-hash.has-lad { top: 124px; }
+.poster .r-hash.has-lad .r-h { height: 334px; }
+.poster .r-hash.has-lad .r-h .rp { height: 284px; }
 .poster .r-h .rp { height: 328px; border-radius: 12px; background-size: cover; background-position: center bottom; background-repeat: no-repeat; background-color: #14102c; }
 .poster .r-h .rc { text-align: center; padding-top: 8px; }
 .poster .r-h .rc b { display: block; font-weight: 800; font-size: 17px; line-height: 20px; letter-spacing: -.02em; }
@@ -480,7 +485,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
   function secFields(tv, sc) {
     if (tv.kind === "clt") {
       var f = [["title", "Section title"], ["sub", "Small line under title"]];
-      if (sc.kind === "list" || sc.kind === "grid2") { f.push(["each", 'Gold "each" tag']); f.push(["unit", "Size shown on discount"]); }
+      if (sc.kind === "list" || sc.kind === "grid2") { f.push(["each", 'Gold "each" tag']); if (sc.deal) f.push(["unit", "Size shown on discount"]); }
       if (sc.kind === "photos2") f.push(["footer", "Bottom note"]);
       return f;
     }
@@ -540,12 +545,12 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
   /* ---- CLT ---- */
   function inFirst(items) { return items.filter(function (i) { return !i.out; }).concat(items.filter(function (i) { return i.out; })); }
   function cHdr(sc) { return '<div class="hdr"><h3 class="ttl">' + esc(sc.title) + "</h3>" + (sc.sub ? '<div class="sb">' + esc(sc.sub) + "</div>" : "") + "</div>"; }
-  function cLadder(sc) {
+  function cLadder(sc, noBest) {
     if (!sc.ladder.length) return "";
     var n = sc.ladder.length;
     return (sc.each ? '<div class="ea"><span class="pl gd">' + esc(sc.each) + "</span></div>" : "") +
       '<div class="ld" style="grid-template-columns:repeat(' + Math.min(n, 4) + ',1fr)">' + sc.ladder.map(function (l, k) {
-        return '<div class="lt' + (k === n - 1 ? " best" : "") + '"><span class="q">' + esc(l.q) + '</span><span class="p">' + esc(money(l.p)) + "</span>" + (l.n ? '<span class="n">' + esc(l.n) + "</span>" : "") + "</div>";
+        return '<div class="lt' + (k === n - 1 && !noBest ? " best" : "") + '"><span class="q">' + esc(l.q) + '</span><span class="p">' + esc(money(l.p)) + "</span>" + (l.n ? '<span class="n">' + esc(l.n) + "</span>" : "") + "</div>";
       }).join("") + "</div>";
   }
   function cBanners(sc) {
@@ -556,7 +561,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
   function cSec(sc) {
     var h = "";
     if (sc.kind === "photos2") {
-      h = '<div class="sec grow">' + cHdr(sc) + '<div class="ph2">' + sc.items.map(function (i) {
+      h = '<div class="sec grow">' + cHdr(sc) + (sc.ladder.length ? '<div class="hl">' + cLadder(sc, true) + "</div>" : "") + '<div class="ph2">' + sc.items.map(function (i) {
         return '<div class="pc' + (i.out ? " out" : "") + '"><div class="ph' + (i.photo ? "" : " none") + '"' + bgs(i) + '></div><div class="lb"><b>' + esc(i.name) + "</b>" + (i.desc ? "<span>" + esc(i.desc) + "</span>" : "") + (i.out ? soPill() : "") + "</div></div>";
       }).join("") + "</div>" + (sc.footer ? '<div class="ft">' + esc(sc.footer) + "</div>" : "") + "</div>";
     } else if (sc.kind === "list") {
@@ -593,8 +598,8 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
   function ladRow(sc, cls, bc, style, tileCls) {
     var n = sc.ladder.length; if (!n) return "";
     return '<div class="l-row ' + bc + '" style="' + style + '">' + sc.ladder.map(function (l, k) {
-      var best = k === n - 1;
-      return '<div class="l-t ' + (tileCls || "") + (best ? " best" : "") + '"><div class="q">' + esc(l.q) + " " + (/\d\s*$/.test(l.q) && !/for/i.test(l.q) ? "" : "") + "</div>" + (best && tileCls !== "sm" ? '<span class="bst">Best</span>' : "") + '<span class="p">' + esc(money(l.p)) + "</span>" + (l.n ? '<span class="n">' + esc(l.n) + "</span>" : "") + "</div>";
+      var best = k === n - 1 && !/nobest/.test(tileCls || "");
+      return '<div class="l-t ' + (tileCls || "") + (best ? " best" : "") + '"><div class="q">' + esc(l.q) + "</div>" + (best && !/sm/.test(tileCls || "") ? '<span class="bst">Best</span>' : "") + '<span class="p">' + esc(money(l.p)) + "</span>" + (l.n ? '<span class="n">' + esc(l.n) + "</span>" : "") + "</div>";
     }).join("") + "</div>";
   }
 
@@ -605,6 +610,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
     }).join("");
     return head(tv) + (tv.kicker ? '<div class="h-kick">' + esc(tv.kicker) + "</div>" : "") + (tv.big ? '<h2 class="h-big">' + esc(tv.big) + "</h2>" : "") +
       '<div class="h-pills">' + [tv.pill0, tv.pill1, tv.pill2].filter(Boolean).map(function (p) { return "<span>" + esc(p) + "</span>"; }).join("") + "</div>" +
+      ladRow(sc, "", "b-purple", "left:1000px;top:236px;width:902px;height:104px;grid-template-columns:repeat(" + Math.min(sc.ladder.length, 4) + ",1fr)", "md nobest") +
       '<div class="h-row">' + cards + "</div>" + foot(tv);
   }
   function cardsPoster(tv) {
@@ -651,7 +657,7 @@ p.lede { margin: 0 0 18px; color: var(--muted); max-width: 66ch; }
       }).join("") + "</div>";
     }
     return head(tv) +
-      '<div class="pnl a"><h3 class="pt">' + esc(h.title) + '</h3><div class="ptag">' + esc(h.tag) + '</div><div class="r-hash">' + hs + "</div>" + (h.footer ? '<div class="pfoot" style="top:798px">' + esc(h.footer) + "</div>" : "") + "</div>" +
+      '<div class="pnl a"><h3 class="pt">' + esc(h.title) + '</h3><div class="ptag">' + esc(h.tag) + '</div><div class="r-hash' + (h.ladder.length ? " has-lad" : "") + '">' + hs + "</div>" + ladRow(h, "", "b-purple", "left:14px;top:56px;width:1110px;height:62px;grid-template-columns:repeat(" + Math.min(h.ladder.length || 1, 4) + ",1fr)", "sm nobest") + (h.footer ? '<div class="pfoot" style="top:798px">' + esc(h.footer) + "</div>" : "") + "</div>" +
       '<div class="pnl b"><h3 class="pt">' + esc(p.title) + '</h3><div class="ptag">' + esc(p.tag) + '</div><div class="r-pre">' + ps + "</div>" + lad + (p.footer ? '<div class="pfoot" style="top:799px">' + esc(p.footer) + "</div>" : "") + "</div>";
   }
   function posterHTML(tv) {
