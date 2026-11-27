@@ -32,12 +32,7 @@ Images are 1920 x 1080 (TV size).
 - **Reset** in the Edit tab puts that store back to the original TV menus.
 - Clearing your browser's site data erases saved edits. Use **Save data** first if you want a backup.
 
-## Updating the site (GitHub Pages)
 
-1. Open this repository on github.com.
-2. Click **Add file, then Upload files**, and drag in the new `index.html`.
-3. Click **Commit changes**.
-4. Wait 1 to 2 minutes, then hard refresh the site (Ctrl+Shift+R, or Cmd+Shift+R on Mac).
 
 ## Notes
 
